@@ -147,11 +147,14 @@ def check_collection_consent() -> bool:
     Check if the user has given consent to store their data.
     If not, ask for their consent.
     """
-    path = Path(".gpte_consent")
-    if path.exists() and path.read_text() == "true":
-        return True
-    else:
-        return ask_collection_consent()
+    return False
+
+
+#     path = Path(".gpte_consent")
+#     if path.exists() and path.read_text() == "true":
+#         return True
+#     else:
+#         return ask_collection_consent()
 
 
 def ask_collection_consent() -> bool:
