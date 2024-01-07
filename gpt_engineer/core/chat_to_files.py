@@ -182,15 +182,20 @@ def apply_edits(edits: List[Edit], files_dict: FilesDict):
                 )
             files_dict[filename] = edit.after  # new file
         else:
-            occurrences_cnt = files_dict[filename].count(edit.before)
-            if occurrences_cnt == 0:
+            if filename in files_dict:
+                occurrences_cnt = files_dict[filename].count(edit.before)
+                if occurrences_cnt == 0:
+                    logger.warning(
+                        f"While applying an edit to `{filename}`, the code block to be replaced was not found. No instances will be replaced."
+                    )
+                if occurrences_cnt > 1:
+                    logger.warning(
+                        f"While applying an edit to `{filename}`, the code block to be replaced was found multiple times. All instances will be replaced."
+                    )
+                files_dict[filename] = files_dict[filename].replace(
+                    edit.before, edit.after
+                )  # existing file
+            else:
                 logger.warning(
-                    f"While applying an edit to `{filename}`, the code block to be replaced was not found. No instances will be replaced."
+                    f"While applying an edit to `{filename}`, the file was not found. Changes might not be applied, check file_list.txt"
                 )
-            if occurrences_cnt > 1:
-                logger.warning(
-                    f"While applying an edit to `{filename}`, the code block to be replaced was found multiple times. All instances will be replaced."
-                )
-            files_dict[filename] = files_dict[filename].replace(
-                edit.before, edit.after
-            )  # existing file
