@@ -150,13 +150,6 @@ def check_collection_consent() -> bool:
     return False
 
 
-#     path = Path(".gpte_consent")
-#     if path.exists() and path.read_text() == "true":
-#         return True
-#     else:
-#         return ask_collection_consent()
-
-
 def ask_collection_consent() -> bool:
     """
     Ask the user for consent to store their data.
